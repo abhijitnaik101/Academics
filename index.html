@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Learning App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1><i class="fas fa-brain"></i> Flashcard Learning</h1>
+
+        <!-- Random Mode Toggle -->
+        <button id="random-toggle" onclick="toggleRandomMode()" style="background-color: #dc3545; color: white;">
+            🔀 Random Mode: OFF
+        </button>
+
+        <!-- Flashcards -->
+        <div class="card" id="flashcard-container">
+            <h2><i class="fas fa-book"></i> Flashcard</h2>
+            <p id="flashcard-question"></p>
+            <button onclick="showFlashcardAnswer()">Show Answer</button>
+            <p id="flashcard-answer" class="hidden"></p>
+            <button onclick="nextFlashcard()">Next</button>
+            <input type="number" id="flashcard-index" placeholder="Enter index">
+            <button onclick="goToFlashcard()">Go</button>
+        </div>
+
+        <!-- MCQs -->
+        <div class="card" id="mcq-container">
+            <h2><i class="fas fa-question-circle"></i> MCQ</h2>
+            <p id="mcq-question"></p>
+            <div id="mcq-options"></div>
+            <button onclick="nextMCQ()">Next</button>
+            <input type="number" id="mcq-index" placeholder="Enter index">
+            <button onclick="goToMCQ()">Go</button>
+        </div>
+
+        <!-- Matching -->
+        <div class="card" id="matching-container">
+            <h2><i class="fas fa-random"></i> Matching Pairs</h2>
+            <table id="matching-table"></table>
+            <button onclick="showMatchingAnswer()">Show Answer</button>
+            <table id="matching-answer" class="hidden"></table>
+            <button onclick="nextMatching()">Next</button>
+            <input type="number" id="matching-index" placeholder="Enter index">
+            <button onclick="goToMatching()">Go</button>
+        </div>
+
+        <!-- Differences -->
+        <div class="card" id="difference-container">
+            <h2><i class="fas fa-exchange-alt"></i> Differences</h2>
+            <p id="difference-question"></p>
+            <button onclick="showDifferenceAnswer()">Show Answer</button>
+            <table id="difference-answer" class="hidden"></table>
+            <button onclick="nextDifference()">Next</button>
+            <input type="number" id="difference-index" placeholder="Enter index">
+            <button onclick="goToDifference()">Go</button>
+        </div>
+
+    </div>
+
+
+    <script src="CD/flashcards.js"></script>
+    <script src="CD/mcqs.js"></script>
+    <script src="CD/matching.js"></script>
+    <script src="CD/differences.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
