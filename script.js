@@ -1,9 +1,25 @@
 let flashcardIndex = 0, mcqIndex = 0, matchingIndex = 0, differenceIndex = 0;
 let randomMode = false; // Toggle for random mode
 
-// Utility function to get a random index
-function getRandomIndex(max) {
-    return Math.floor(Math.random() * max);
+// Utility function to create a shuffled queue
+function createShuffledQueue(length) {
+    let arr = [...Array(length).keys()]; // [0, 1, 2, ..., length-1]
+    for (let i = arr.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
+    }
+    return arr;
+}
+
+// Initialize shuffled queues for random mode
+let flashcardQueue = createShuffledQueue(flashcards.length);
+let mcqQueue = createShuffledQueue(mcqs.length);
+let matchingQueue = createShuffledQueue(matchingPairs.length);
+let differenceQueue = createShuffledQueue(differences.length);
+
+function getNextFromQueue(queue, length) {
+    if (queue.length === 0) queue.push(...createShuffledQueue(length)); // Refill when empty
+    return queue.shift(); // Get next shuffled value
 }
 
 // ========== FLASHCARDS ==========
@@ -18,7 +34,8 @@ function showFlashcardAnswer() {
 }
 
 function nextFlashcard() {
-    flashcardIndex = randomMode ? getRandomIndex(flashcards.length) : (flashcardIndex + 1) % flashcards.length;
+    flashcardIndex = randomMode ? getNextFromQueue(flashcardQueue, flashcards.length) 
+                                : (flashcardIndex + 1) % flashcards.length;
     document.getElementById("flashcard-index").value = flashcardIndex; // Update index input
     loadFlashcard();
 }
@@ -49,8 +66,9 @@ function loadMCQ() {
 }
 
 function nextMCQ() {
-    mcqIndex = randomMode ? getRandomIndex(mcqs.length) : (mcqIndex + 1) % mcqs.length;
-    document.getElementById("mcq-index").value = mcqIndex; // Update index input
+    mcqIndex = randomMode ? getNextFromQueue(mcqQueue, mcqs.length) 
+                          : (mcqIndex + 1) % mcqs.length;
+    document.getElementById("mcq-index").value = mcqIndex;
     loadMCQ();
 }
 
@@ -80,8 +98,9 @@ function showMatchingAnswer() {
 }
 
 function nextMatching() {
-    matchingIndex = randomMode ? getRandomIndex(matchingPairs.length) : (matchingIndex + 1) % matchingPairs.length;
-    document.getElementById("matching-index").value = matchingIndex; // Update index input
+    matchingIndex = randomMode ? getNextFromQueue(matchingQueue, matchingPairs.length) 
+                               : (matchingIndex + 1) % matchingPairs.length;
+    document.getElementById("matching-index").value = matchingIndex;
     loadMatching();
 }
 
@@ -112,8 +131,9 @@ function showDifferenceAnswer() {
 }
 
 function nextDifference() {
-    differenceIndex = randomMode ? getRandomIndex(differences.length) : (differenceIndex + 1) % differences.length;
-    document.getElementById("difference-index").value = differenceIndex; // Update index input
+    differenceIndex = randomMode ? getNextFromQueue(differenceQueue, differences.length) 
+                                 : (differenceIndex + 1) % differences.length;
+    document.getElementById("difference-index").value = differenceIndex;
     loadDifference();
 }
 
